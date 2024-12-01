@@ -58,10 +58,7 @@ class Api:
             json = self._get_client_token(region)
             self._access_token = json["access_token"]
 
-        if query_params.get("access_token") is None:
-            query_params["access_token"] = self._access_token
-
-        response = self._session.get(url, params=query_params)
+        response = self._session.get(url, params=query_params, headers={"Authorization": "Bearer {}".format(self._access_token)})
 
         return self._response_handler(response)
 
